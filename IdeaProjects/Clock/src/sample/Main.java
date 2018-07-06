@@ -14,47 +14,87 @@ import javafx.scene.text.Text;
 import java.util.Date.*;
 
 public class Main extends Application {
-    SimpleDateFormat year = new SimpleDateFormat("yyyy");
-    Date data = new Date();
-    Date gr = new Date(118, 11,32);
-    public int getacctualYear() {
-        int x = Integer.parseInt(year.format(data));
-        return x;
-    }
-    public int getnextYear(){
-        int y = Integer.parseInt(year.format(gr));
-        return y;
-    }
 
 
     @Override
     public void start(Stage primaryStage) {
-
-        final int dayinyear = 365;
+        int daysinyear = 365;
         final int monthinyear = 12;
         final int mininhours = 60;
         final int secinmin = 60;
-        int allsecondsleft;
-        //adding data variables
-        Pane root = new Pane();
+        SimpleDateFormat year = new SimpleDateFormat("yyyy");
         SimpleDateFormat df = new SimpleDateFormat("EEEE yyyy.mm.dd 'Godzina: ' HH:mm:ss");;
-        SimpleDateFormat month = new SimpleDateFormat("MM");
+        SimpleDateFormat month = new SimpleDateFormat("MMMM");
         SimpleDateFormat day = new SimpleDateFormat("D");
         SimpleDateFormat hours = new SimpleDateFormat("HH");
         SimpleDateFormat minutes = new SimpleDateFormat("mm");
         SimpleDateFormat seconds = new SimpleDateFormat("ss");
+        Date data = new Date();
+        Date gr = new Date(118, 11,32);
+        int a = Integer.parseInt(year.format(data));
+        int n = Integer.parseInt(year.format(gr));
+        int acctualday = Integer.parseInt(day.format(data));
+        int yearinnextsyear = Integer.parseInt(year.format(gr));
+        String monthinthisyear =  month.format(data);String monthinnextyear = month.format(gr);
+        int dayinthisyear =  Integer.parseInt(day.format(data));int daysinnextyear = Integer.parseInt(day.format(gr));
+        int hoursinthisyear = Integer.parseInt(hours.format(data));int hoursinnextyear = Integer.parseInt(hours.format(gr));
+        int minutesinthisyear = Integer.parseInt(minutes.format(data));int minutesinnextyear = Integer.parseInt(minutes.format(gr));
+        int secondsinthisyear = Integer.parseInt(seconds.format(data));int secondsinnextyear = Integer.parseInt(seconds.format(gr));
+        if(a%4==0 && a%100!=0 || a%400==0 ){
+            daysinyear=daysinyear+1;
+        }else{
+            int acctualyear = Integer.parseInt(year.format(data));
+            String acctualmonth = month.format(data);
+            switch (acctualmonth){
+                case "styczen":
+                    if(acctualday<=31){}
+                    break;
+                case "luty":
+                    31
+                    break;
+                case "marzec":
+                    31+28
+                    break;
+                case "kwiecien":
+                    31+28+31
+                    break;
+                case "maj":
+                    31+28+31+30
+                    break;
+                case "czerwiec":
+                    31+28+31+30+31
+                    break;
+                case "lipiec":
+                    31+28+31+30+31+30
+                    break;
+                case "sierpien":
+                    31+28+31+30+31+30+31
+                    break;
+                case "wrzesien":
+                    31+28+31+30+31+30+31+31
+                    break;
+                case "pazdziernik":
+                    31+28+31+30+31+30+31+31+30
+                    break;
+                case "listopad":
+                    31+28+31+30+31+30+31+31+30+31
+
+                    break;
+                case "grudzien":
+                    31+28+31+30+31+30+31+31+30+31+30
+                    break;
+            }
+
+        }
+        int allsecondsleft;
+        //adding data variables
+        Pane root = new Pane();;
         Text text= new Text(150,50,"Czas do końca roku blyat");
         /*text.setText("Czas do końca roku blyat");
         text.setX(400);
         text.setY(100);
         */
         StackPane pane = new StackPane();
-        int yearinnextsyear = Integer.parseInt(year.format(gr));
-        int monthinthisyear =  Integer.parseInt(month.format(data));int monthinnextyear = Integer.parseInt(month.format(gr));
-        int dayinthisyear =  Integer.parseInt(day.format(data));int daysinnextyear = Integer.parseInt(day.format(gr));
-        int hoursinthisyear = Integer.parseInt(hours.format(data));int hoursinnextyear = Integer.parseInt(hours.format(gr));
-        int minutesinthisyear = Integer.parseInt(minutes.format(data));int minutesinnextyear = Integer.parseInt(minutes.format(gr));
-        int secondsinthisyear = Integer.parseInt(seconds.format(data));int secondsinnextyear = Integer.parseInt(seconds.format(gr));
         /*
         if(hourstonextyear >  0 ){
             hourstonextyear = hourstonextyear * mininhours * secinmin;
@@ -65,7 +105,6 @@ public class Main extends Application {
         allsecondsleft = hourstonextyear + minutestonextyear + secondstonextyear;
         System.out.println("There is "+monthtonextyear+" months "+daytonextyear+" days "+hourstonextyear+" hours "+minutestonextyear+" minutes "+secondstonextyear+" seconds to next year" );
         */
-        System.out.println();
         Text date = new Text(200,250,df.format(data));
         root.getChildren().addAll(date,text);
         Scene scene = new Scene(root,500,500);
