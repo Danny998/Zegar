@@ -23,9 +23,9 @@ public class Main extends Application {
         final int hoursinday = 24;
         final int mininhours = 60;
         final int secinmin = 60;
-        long int finalseconds;
-        long int finalsecondsnextyear;
-        long int secondsleft;
+        int finalseconds;
+        int finalsecondsnextyear;
+        int secondsleft;
         SimpleDateFormat year = new SimpleDateFormat("yyyy");
         SimpleDateFormat df = new SimpleDateFormat("EEEE yyyy.mm.dd 'Godzina: ' HH:mm:ss");;
         SimpleDateFormat month = new SimpleDateFormat("MMMM");
@@ -40,17 +40,27 @@ public class Main extends Application {
         int acctualdayinyear = Integer.parseInt(day.format(data));
         int nextyear = Integer.parseInt(year.format(gr));
         int yearinnextsyear = Integer.parseInt(year.format(gr));
+        int secondstonextyear;
+        int minutestonextyear;
+        int hourstonextyear;
+        int daystonextyear;
+        int monthstonextyear;
         String monthinthisyear =  month.format(data);String monthinnextyear = month.format(gr);
         if(a%4==0 && a%100!=0 || a%400==0 ){
             daysinyear=daysinyear+1;
         }else {
+            //convert acctual hours, minutes to seconds
+            int secondsbetweenhoursandsec = ((Integer.parseInt(hours.format(data))*mininhours)*secinmin) + (Integer.parseInt(minutes.format(data))*secinmin) + Integer.parseInt(seconds.format(data));
             int acctualyear = Integer.parseInt(year.format(data));
-            finalseconds = acctualyear * acctualdayinyear * hoursinday * mininhours * secinmin;
-            finalsecondsnextyear = nextyear * (daysinyear + 1) * hoursinday * mininhours * secinmin;
+            finalseconds = acctualdayinyear * hoursinday * mininhours * secinmin+secondsbetweenhoursandsec;
+            finalsecondsnextyear = daysinyear * hoursinday * mininhours * secinmin;
             secondsleft = finalsecondsnextyear - finalseconds;
-            System.out.println(secondsleft);
+
+
         }
-        int allsecondsleft;
+        minutestonextyear = secondsleft / secinmin;
+        hourstonextyear = minutestonextyear / mininhours;
+        daystonextyear = hourstonextyear / hoursinday;
         //adding data variables
         Pane root = new Pane();;
         Text text= new Text(150,50,"Czas do końca roku blyat");
@@ -59,16 +69,9 @@ public class Main extends Application {
         text.setY(100);
         */
         StackPane pane = new StackPane();
-        /*
-        if(hourstonextyear >  0 ){
-            hourstonextyear = hourstonextyear * mininhours * secinmin;
-        }
-        if(minutestonextyear > 0 ) {
-            minutestonextyear = minutestonextyear * secinmin;
-        }
-        allsecondsleft = hourstonextyear + minutestonextyear + secondstonextyear;
-        System.out.println("There is "+monthtonextyear+" months "+daytonextyear+" days "+hourstonextyear+" hours "+minutestonextyear+" minutes "+secondstonextyear+" seconds to next year" );
-        */
+
+        System.out.println("There is "+daystonextyear+" days "+hourstonextyear+" hours "+minutestonextyear+" minutes "+secondsleft+" seconds to next year" );
+
         Text date = new Text(200,250,df.format(data));
         root.getChildren().addAll(date,text);
         Scene scene = new Scene(root,500,500);
