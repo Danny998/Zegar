@@ -15,7 +15,7 @@ import java.util.Date.*;
 
 public class Main extends Application {
 
-
+    int secondsleft;
     @Override
     public void start(Stage primaryStage) {
         int daysinyear = 365;
@@ -25,7 +25,7 @@ public class Main extends Application {
         final int secinmin = 60;
         int finalseconds;
         int finalsecondsnextyear;
-        int secondsleft;
+
         SimpleDateFormat year = new SimpleDateFormat("yyyy");
         SimpleDateFormat df = new SimpleDateFormat("EEEE yyyy.mm.dd 'Godzina: ' HH:mm:ss");;
         SimpleDateFormat month = new SimpleDateFormat("MMMM");
@@ -48,6 +48,7 @@ public class Main extends Application {
         String monthinthisyear =  month.format(data);String monthinnextyear = month.format(gr);
         if(a%4==0 && a%100!=0 || a%400==0 ){
             daysinyear=daysinyear+1;
+
         }else {
             //convert acctual hours, minutes to seconds
             int secondsbetweenhoursandsec = ((Integer.parseInt(hours.format(data))*mininhours)*secinmin) + (Integer.parseInt(minutes.format(data))*secinmin) + Integer.parseInt(seconds.format(data));
@@ -55,14 +56,17 @@ public class Main extends Application {
             finalseconds = acctualdayinyear * hoursinday * mininhours * secinmin+secondsbetweenhoursandsec;
             finalsecondsnextyear = daysinyear * hoursinday * mininhours * secinmin;
             secondsleft = finalsecondsnextyear - finalseconds;
-
-
+            
         }
+
+        daystonextyear = secondsleft / secinmin / mininhours / hoursinday;
+        secondsleft = secondsleft - daystonextyear * secinmin * mininhours * hoursinday;
+        hourstonextyear = secondsleft / secinmin / mininhours;
+        secondsleft = secondsleft - hourstonextyear * secinmin * mininhours;
         minutestonextyear = secondsleft / secinmin;
-        hourstonextyear = minutestonextyear / mininhours;
-        daystonextyear = hourstonextyear / hoursinday;
+        secondsleft = secondsleft - minutestonextyear * secinmin;
         //adding data variables
-        Pane root = new Pane();;
+        Pane root = new Pane();
         Text text= new Text(150,50,"Czas do końca roku blyat");
         /*text.setText("Czas do końca roku blyat");
         text.setX(400);
